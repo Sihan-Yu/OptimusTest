@@ -12,12 +12,12 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class TestUtil {
 
-    public static String TESTDATA_SHEET_PATH = "/src/main/java/testdata/FreeCrmTestData.xlsx";
+    public static String TESTDATA_SHEET_PATH = "src/main/java/testdata/GalaxyEvent.xls";
 
     static Workbook book;
     static Sheet sheet;
 
-    public static Object[][] getTestData(String sheetName) {
+    public static Object[] getTestData(String sheetName) {
         FileInputStream file = null;
         try {
             file = new FileInputStream(TESTDATA_SHEET_PATH);
@@ -30,14 +30,11 @@ public class TestUtil {
             e.printStackTrace();
         }
         sheet = book.getSheet(sheetName);
-        Object[][] data = new Object[sheet.getLastRowNum()][sheet.getRow(0).getLastCellNum()];
-        // System.out.println(sheet.getLastRowNum() + "--------" +
-        // sheet.getRow(0).getLastCellNum());
+        Object[] data = new Object[sheet.getLastRowNum()];
+
         for (int i = 0; i < sheet.getLastRowNum(); i++) {
-            for (int k = 0; k < sheet.getRow(0).getLastCellNum(); k++) {
-                data[i][k] = sheet.getRow(i + 1).getCell(k).toString();
-                // System.out.println(data[i][k]);
-            }
+                data[i] = sheet.getRow(i + 1).getCell(0).toString();
+
         }
         return data;
     }
