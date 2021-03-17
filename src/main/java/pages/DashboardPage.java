@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage {
     private WebDriver driver;
+    private By flowsButton = By.xpath("//span[contains(text(), 'Flows')]");
+    private By connectorsButton = By.xpath("//span[contains(text(), 'Connectors')]");
 
     public DashboardPage(WebDriver driver){
         this.driver = driver;
@@ -25,19 +27,15 @@ public class DashboardPage {
     public ConnectorsPage clickConnectors(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Connectors")));
-        clickLink("Connectors");
+        driver.findElement(connectorsButton).click();
         return new ConnectorsPage(driver);
     }
 
     public FlowsPage clickFlows(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Flows")));
-        clickLink("Flows");
+        driver.findElement(flowsButton).click();
         return new FlowsPage(driver);
-    }
-
-    private void clickLink(String linkText){
-        driver.findElement(By.linkText(linkText)).click();
     }
 
 }

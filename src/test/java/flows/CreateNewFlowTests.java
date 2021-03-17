@@ -21,7 +21,7 @@ public class CreateNewFlowTests extends BaseTests {
         var flowsPage = dashboardPage.clickFlows();
         flowsPage.clickCreateNewFlow(); // issue here: click some button which is not actually we want
         flowsPage.setFlowName("PA zone alarm");
-        //flowsPage.setFlowChart(flowName);
+        flowsPage.setFlowChart("PA zone alarm");
         //flowsPage.setAssociation();
 
         //System.out.println("Flow Name: " + flowName);

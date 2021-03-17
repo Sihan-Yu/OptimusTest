@@ -15,12 +15,16 @@ public class FlowsPage {
     private WebDriver driver;
     private By createNewFlowButton = By.cssSelector("[class='create-button']");
     private By flowNameField = By.name("Flow Name");
-    private By nextButton = By.xpath("//button[contains(text(), 'Next')]");
-    private By addTriggerButton = By.className("add-trigger-container");
-    private By selectSystemToIntegrate = By.className("third-party-integration-item-v2-container tps-container");
-    private By galaxyConnectorButton = By.linkText("Galaxy Connector Connector");
+    private By nextButton = By.xpath("/html/body/div/div[2]/div[2]/div[4]/button[1]");
+    private By addTriggerButton = By.xpath("//span[contains(text(), 'Add Trigger')]");
+    private By selectSystemToIntegrate = By.className("selected-container");
+    private By selectEvent = By.className("selection-result");
+    private By galaxyConnectorButton = By.xpath("//span[.='Galaxy Connector Connector']");
+    private By flowChartOKButton = By.xpath("//button[contains(text(), 'OK')]");
     private By HCConnectorButton = By.linkText("HikCentral - EU Connector");
     private By inputSearchFiled = By.cssSelector("input.input");
+    private By searchResults = By.className("child-drop-down-item");
+    private By expandEventDropdownListButton = By.className("option-text-container");
     private By eventButton = By.className("tree-view-drop-down-container event-category-selector");
     private By responseButton = By.linkText("Add Response");
 
@@ -39,21 +43,28 @@ public class FlowsPage {
 
     public void setFlowName(String flowName){
         driver.findElement(flowNameField).sendKeys(flowName);
-        WebElement nextButtonElement = driver.findElement(nextButton);
-        Actions action = new Actions(driver);
-        action.moveToElement(nextButtonElement);
         driver.findElement(nextButton).click();
     }
 
     public void setFlowChart(String flowName){
-        // click trigger
-        setSystemAndEvent("Galaxy Connector Connector", flowName);
-        // click response
-        setSystemAndEvent("HikCentral - EU Connector", "DynamicallyTriggerAlarm");
+        // set trigger
+        driver.findElement(addTriggerButton).click();
+        setSystemAndEvent("Galaxy Connector", flowName);
+
+        // set response
+        //driver.findElement(addTriggerButton).click();
+        //setSystemAndEvent("HikCentral - EU Connector", "DynamicallyTriggerAlarm");
     }
 
     public void setSystemAndEvent(String system, String event){
-        clickLink(system);
+        driver.findElement(selectSystemToIntegrate).click();
+        driver.findElements(inputSearchFiled).get(0).sendKeys(system);
+        driver.findElement(galaxyConnectorButton).click();
+        driver.findElement(selectEvent).click();
+        driver.findElements(inputSearchFiled).get(1).sendKeys(event);
+        driver.findElement(expandEventDropdownListButton).click();
+        driver.findElement(searchResults).click();
+        driver.findElement(flowChartOKButton).click();
     }
 
     public void setAssociation(){
@@ -80,10 +91,6 @@ public class FlowsPage {
 
     private Select findDropDownElement(){
         return new Select(driver.findElement(dropdown));
-    }
-
-    public void clickAddTrigger(){
-        driver.findElement(addTriggerButton).click();
     }
 
     private void clickLink(String linkText){
