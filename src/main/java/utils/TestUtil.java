@@ -34,7 +34,6 @@ public class TestUtil {
 
         for (int i = 0; i < sheet.getLastRowNum(); i++) {
                 data[i] = sheet.getRow(i + 1).getCell(0).toString();
-
         }
         return data;
     }

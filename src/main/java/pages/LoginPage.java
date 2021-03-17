@@ -19,5 +19,4 @@ public class LoginPage {
         driver.findElement(loginButton).click();
         return new DashboardPage(driver);
     }
-
 }

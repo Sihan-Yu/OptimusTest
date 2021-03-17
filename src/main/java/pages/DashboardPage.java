@@ -12,6 +12,10 @@ public class DashboardPage {
         this.driver = driver;
     }
 
+    public String getDashboardTitle(){
+        return driver.getTitle();
+    }
+
     public String getDashboardUrl(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Flows")));
